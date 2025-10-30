@@ -18,6 +18,12 @@ dependencies:
   flutter_native_splash: ^2.4.7
   flutter_localization: ^0.3.3
   intl: ^0.20.2
+  intl_phone_field: ^3.2.0
+  pinput: ^5.0.2
+  firebase_auth: ^6.1.1
+  flutter_svg: ^2.2.1
+  firebase_core: ^4.2.0
+  cloud_firestore: ^6.0.3
 
 dev_dependencies:
   flutter_test:
@@ -31,7 +37,21 @@ flutter:
 
   assets:
     - assets/
-    - assets/
+    - assets/images/
+    - assets/fonts/
+
+  fonts:
+    - family: Bold
+      fonts:
+        - asset: assets/fonts/Parkinsans-Bold.ttf
+
+    - family: Regular
+      fonts:
+        - asset: assets/fonts/Parkinsans-Regular.ttf
+
+    - family: TagRegular
+      fonts:
+        - asset: assets/fonts/JosefinSans-Regular.ttf
 
 flutter_native_splash:
   android: true
@@ -40,11 +60,13 @@ flutter_native_splash:
   color: "#FFFFFF"
   color_dark: "#121212"
   image: assets/logo.png
+  image_dark: assets/logo_dark.png
   branding: assets/cocode.png
 
   fullscreen: true
   android_12:
     image: assets/logo.png
+    image_dark: assets/logo_dark.png
     icon_background_color: "#FFFFFF"
     icon_background_color_dark: "#121212"
 

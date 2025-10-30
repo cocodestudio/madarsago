@@ -1,4 +1,4 @@
-package com.example.madarsago
+package com.cocode.madarsago
 
 import io.flutter.embedding.android.FlutterActivity
 
