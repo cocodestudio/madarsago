@@ -1,0 +1,54 @@
+name: madarsago
+description: "Find the light of Deen near you."
+
+publish_to:
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+  
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_native_splash: ^2.4.7
+  flutter_localization: ^0.3.3
+  intl: ^0.20.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  generate: true
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/logo.png
+  branding: assets/cocode.png
+  color_dark: "#121212"
+  image_dark: assets/logo_dark.png
+  branding_dark: assets/cocode_dark.png
+
+  fullscreen: true
+
+  android_12:
+    image: assets/logo.png
+    image_dark: assets/logo_dark.png
+    icon_background_color: "#FFFFFF"
+    icon_background_color_dark: "#121212"
+  ios:
+    image: assets/logo.png
+    image_dark: assets/logo_dark.png
+    color: "#FFFFFF"
+    color_dark: "#121212"
