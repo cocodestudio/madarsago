@@ -1,27 +1,21 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:madarsago/onnboard_screen.dart';
+import 'package:madarsago/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:madarsago/home_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:madarsago/profile_provider.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+import 'onnboard_screen.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("MadarsaGo Home")),
-      body: const Center(child: Text("Welcome to MadarsaGo!")),
-    );
-  }
-}
-
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class _SplashScreenState extends ConsumerState<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
@@ -64,13 +58,34 @@ class _SplashScreenState extends State<SplashScreen>
       curve: const Interval(0.5, 1.0, curve: Curves.easeOut),
     );
     _controller.forward();
+
     Timer(const Duration(milliseconds: 3500), () {
-      if (mounted) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const OnboardingScreen()),
-        );
-      }
+      _checkAuthAndOnboarding();
     });
+  }
+
+  void _checkAuthAndOnboarding() async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool hasSeenOnboarding = prefs.getBool('hasSeenOnboarding') ?? false;
+    final user = ref.read(firebaseAuthProvider).currentUser;
+
+    Widget destinationScreen;
+
+    if (hasSeenOnboarding) {
+      if (user != null) {
+        destinationScreen = const HomeScreen();
+      } else {
+        destinationScreen = const LoginScreen();
+      }
+    } else {
+      destinationScreen = const OnboardingScreen();
+    }
+
+    if (mounted) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => destinationScreen),
+      );
+    }
   }
 
   @override

@@ -1,9 +1,26 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:madarsago/profile_provider.dart';
 import 'package:madarsago/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: AndroidProvider.debug,
+    appleProvider: AppleProvider.debug,
+  );
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -11,7 +28,11 @@ void main() {
       statusBarBrightness: Brightness.light,
     ),
   );
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 const Color appPrimaryColor = Color(0xFF297373);
@@ -20,11 +41,13 @@ const Color appAccentColor = Color(0xFFA491D3);
 const Color appDarkColor = Color(0xFF121212);
 const Color appLightColor = Color(0xFFD0DDD7);
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeProvider);
+
     return MaterialApp(
       title: 'MadarsaGo',
       debugShowCheckedModeBanner: false,
@@ -38,7 +61,7 @@ class MyApp extends StatelessWidget {
       },
       theme: ThemeData(
         brightness: Brightness.light,
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: Colors.grey[50],
         primarySwatch: createMaterialColor(appPrimaryColor),
         primaryColor: appPrimaryColor,
         fontFamily: 'Regular',
@@ -94,7 +117,7 @@ class MyApp extends StatelessWidget {
           secondary: appSecondaryColor,
         ),
       ),
-      themeMode: ThemeMode.system,
+      themeMode: themeMode,
       home: const SplashScreen(),
     );
   }
