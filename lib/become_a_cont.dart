@@ -70,7 +70,7 @@ class _ContributorFormScreenState extends ConsumerState<ContributorFormScreen> {
                 "Application Submitted",
                 style: textTheme.headlineMedium?.copyWith(
                   fontFamily: 'Bold',
-                  fontSize: 20,
+                  fontSize: 18, // CHANGED: 20 se 18
                 ),
               ),
               const SizedBox(height: 8),
@@ -79,7 +79,7 @@ class _ContributorFormScreenState extends ConsumerState<ContributorFormScreen> {
                 textAlign: TextAlign.center,
                 style: textTheme.bodyMedium?.copyWith(
                   fontFamily: 'TagRegular',
-                  fontSize: 16,
+                  fontSize: 15, // CHANGED: 16 se 15
                 ),
               ),
               const SizedBox(height: 24),
@@ -171,7 +171,7 @@ class _ContributorFormScreenState extends ConsumerState<ContributorFormScreen> {
             title: Text(
               "Loading Status...",
               style: textTheme.headlineMedium?.copyWith(
-                fontSize: 20,
+                fontSize: 18, // CHANGED: 20 se 18
                 fontFamily: 'Bold',
               ),
             ),
@@ -189,7 +189,7 @@ class _ContributorFormScreenState extends ConsumerState<ContributorFormScreen> {
             title: Text(
               "Error",
               style: textTheme.headlineMedium?.copyWith(
-                fontSize: 20,
+                fontSize: 18, // CHANGED: 20 se 18
                 fontFamily: 'Bold',
               ),
             ),
@@ -213,7 +213,7 @@ class _ContributorFormScreenState extends ConsumerState<ContributorFormScreen> {
               title: Text(
                 isPending ? "Application Status" : "Apply for Contributor",
                 style: textTheme.headlineMedium?.copyWith(
-                  fontSize: 20,
+                  fontSize: 18, // CHANGED: 20 se 18
                   fontFamily: 'Bold',
                 ),
               ),
@@ -260,7 +260,7 @@ class _ContributorFormScreenState extends ConsumerState<ContributorFormScreen> {
               textAlign: TextAlign.center,
               style: textTheme.headlineMedium?.copyWith(
                 fontFamily: 'Bold',
-                fontSize: 22,
+                fontSize: 20, // CHANGED: 22 se 20
               ),
             ),
             const SizedBox(height: 12),
@@ -269,7 +269,7 @@ class _ContributorFormScreenState extends ConsumerState<ContributorFormScreen> {
               textAlign: TextAlign.center,
               style: textTheme.bodyMedium?.copyWith(
                 fontFamily: 'TagRegular',
-                fontSize: 16,
+                fontSize: 15, // CHANGED: 16 se 15
                 height: 1.5,
               ),
             ),
@@ -300,7 +300,7 @@ class _ContributorFormScreenState extends ConsumerState<ContributorFormScreen> {
               "Tell us about yourself",
               style: textTheme.headlineMedium?.copyWith(
                 fontFamily: 'Bold',
-                fontSize: 22,
+                fontSize: 20, // CHANGED: 22 se 20
               ),
             ),
             const SizedBox(height: 8),
@@ -308,7 +308,7 @@ class _ContributorFormScreenState extends ConsumerState<ContributorFormScreen> {
               "To maintain the quality and trust of our data, we manually approve all contributors.",
               style: textTheme.bodyMedium?.copyWith(
                 fontFamily: 'TagRegular',
-                fontSize: 16,
+                fontSize: 15, // CHANGED: 16 se 15
               ),
             ),
             const SizedBox(height: 32),
@@ -378,9 +378,10 @@ class _ContributorFormScreenState extends ConsumerState<ContributorFormScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
+                elevation: 0,
                 textStyle: textTheme.bodyMedium?.copyWith(
                   fontFamily: 'Bold',
-                  fontSize: 16,
+                  fontSize: 15, // CHANGED: 16 se 15
                 ),
               ),
               child: _isLoading
@@ -409,12 +410,19 @@ class _ContributorFormScreenState extends ConsumerState<ContributorFormScreen> {
     required String? Function(String?) validator,
     int maxLines = 1,
   }) {
+    final textTheme = Theme.of(context).textTheme; // Added this
     return TextFormField(
       controller: controller,
       validator: validator,
       maxLines: maxLines,
+      style: textTheme.bodyMedium?.copyWith(
+        fontSize: 14.5,
+      ), // Added this for input style
       decoration: InputDecoration(
         labelText: labelText,
+        labelStyle: textTheme.bodyMedium?.copyWith(
+          fontSize: 14.5,
+        ), // Added this for label style
         prefixIcon: Icon(icon, color: Colors.grey[500]),
         filled: true,
         fillColor: inputFillColor,

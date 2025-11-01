@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:madarsago/home_widgets.dart';
 import 'package:madarsago/main.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
+class _HomeScreenState extends ConsumerState<HomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _listAnimationController;
   bool _isLoading = true;
@@ -112,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen>
         title,
         style: Theme.of(
           context,
-        ).textTheme.headlineMedium?.copyWith(fontSize: 20),
+        ).textTheme.headlineMedium?.copyWith(fontSize: 18, fontFamily: 'Bold'),
       ),
     );
   }

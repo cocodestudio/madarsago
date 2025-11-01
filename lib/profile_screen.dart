@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:madarsago/login_screen.dart';
 import 'package:madarsago/main.dart';
 import 'package:madarsago/profile_provider.dart';
+import 'add_listing_items.dart';
 import 'admin_panel.dart';
 import 'become_a_cont.dart';
+import 'edit_profile.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -18,6 +20,8 @@ class ProfileScreen extends ConsumerWidget {
     final Color shadowColor = isDarkMode
         ? Colors.black.withAlpha(50)
         : Colors.grey.withAlpha(100);
+
+    final double bottomPadding = MediaQuery.of(context).padding.bottom;
 
     final userData = ref.watch(userDataProvider);
 
@@ -33,7 +37,7 @@ class ProfileScreen extends ConsumerWidget {
         title: Text(
           "Profile",
           style: textTheme.headlineMedium?.copyWith(
-            fontSize: 20,
+            fontSize: 18,
             fontFamily: 'Bold',
           ),
         ),
@@ -44,11 +48,29 @@ class ProfileScreen extends ConsumerWidget {
         iconTheme: IconThemeData(color: textTheme.headlineMedium?.color),
       ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+        padding: EdgeInsets.only(
+          left: 24.0,
+          right: 24.0,
+          top: 16.0,
+          bottom: 16.0 + bottomPadding,
+        ),
         children: [
           const ProfileHeader(),
           const SizedBox(height: 24),
           _buildSectionCard(cardColor, shadowColor, [
+            ProfileListItem(
+              icon: Icons.edit_outlined,
+              iconColor: Colors.blueAccent,
+              title: "Edit Profile",
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const EditProfileScreen(),
+                  ),
+                );
+              },
+            ),
+            const ProfileListDivider(),
             ProfileListItem(
               icon: Icons.bookmark_border,
               iconColor: appPrimaryColor,
@@ -89,7 +111,11 @@ class ProfileScreen extends ConsumerWidget {
                 iconColor: appPrimaryColor,
                 title: "Add New Listing",
                 onTap: () {
-                  // Yahaan 'add_listing_screen.dart' khulegi
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const AddListingScreen(),
+                    ),
+                  );
                 },
               ),
             ]),
@@ -153,6 +179,7 @@ class ProfileScreen extends ConsumerWidget {
               "Logout",
               style: textTheme.bodyMedium?.copyWith(
                 fontFamily: 'Bold',
+                fontSize: 13,
                 color: Colors.red[700],
               ),
             ),
@@ -187,6 +214,7 @@ class ProfileScreen extends ConsumerWidget {
     return Text(
       title.toUpperCase(),
       style: textTheme.bodySmall?.copyWith(
+        fontSize: 11,
         fontFamily: 'Bold',
         color: Colors.grey[500],
         letterSpacing: 0.5,
@@ -203,10 +231,15 @@ class ProfileHeader extends ConsumerWidget {
     final textTheme = Theme.of(context).textTheme;
     final userData = ref.watch(userDataProvider);
 
-    String displayName = "Guest User";
+    String displayName = "Welcome";
+    String displaySub = "Guest User";
+    String? photoUrl;
+
     if (userData.hasValue && userData.value?.data() != null) {
       final data = userData.value!.data() as Map<String, dynamic>;
-      displayName = data['phoneNumber'] ?? "User";
+      displayName = data['fullName'] ?? "Welcome";
+      displaySub = data['phoneNumber'] ?? "User";
+      photoUrl = data['photoUrl'];
     }
 
     return Row(
@@ -214,24 +247,27 @@ class ProfileHeader extends ConsumerWidget {
         CircleAvatar(
           radius: 32,
           backgroundColor: appPrimaryColor.withAlpha(30),
-          child: const Icon(Icons.person, color: appPrimaryColor, size: 32),
+          backgroundImage: (photoUrl != null) ? NetworkImage(photoUrl) : null,
+          child: (photoUrl == null)
+              ? const Icon(Icons.person, color: appPrimaryColor, size: 32)
+              : null,
         ),
         const SizedBox(width: 16),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Welcome,",
-              style: textTheme.bodyMedium?.copyWith(
-                fontFamily: 'Regular',
-                fontSize: 16,
-              ),
-            ),
-            Text(
               displayName,
               style: textTheme.headlineMedium?.copyWith(
                 fontFamily: 'Bold',
-                fontSize: 20,
+                fontSize: 18,
+              ),
+            ),
+            Text(
+              displaySub,
+              style: textTheme.bodyMedium?.copyWith(
+                fontFamily: 'Regular',
+                fontSize: 14.5,
               ),
             ),
           ],
@@ -284,7 +320,7 @@ class ProfileListItem extends StatelessWidget {
                   title,
                   style: textTheme.bodyMedium?.copyWith(
                     fontFamily: 'Bold',
-                    fontSize: 16,
+                    fontSize: 14.5,
                   ),
                 ),
               ),
@@ -329,7 +365,7 @@ class ProfileThemeSwitch extends ConsumerWidget {
               "Dark Mode",
               style: textTheme.bodyMedium?.copyWith(
                 fontFamily: 'Bold',
-                fontSize: 16,
+                fontSize: 14.5,
               ),
             ),
           ),

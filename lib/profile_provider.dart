@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 final firebaseAuthProvider = Provider<FirebaseAuth>((ref) {
@@ -14,6 +15,10 @@ final authStreamProvider = StreamProvider<User?>((ref) {
 
 final firestoreProvider = Provider<FirebaseFirestore>((ref) {
   return FirebaseFirestore.instance;
+});
+
+final storageProvider = Provider<FirebaseStorage>((ref) {
+  return FirebaseStorage.instance;
 });
 
 final userDataProvider = StreamProvider<DocumentSnapshot?>((ref) {
@@ -49,6 +54,14 @@ final pendingApplicationsProvider = StreamProvider<QuerySnapshot>((ref) {
   return firestore
       .collection('applications')
       .where('status', isEqualTo: 'pending')
+      .snapshots();
+});
+
+final pendingListingsProvider = StreamProvider<QuerySnapshot>((ref) {
+  final firestore = ref.watch(firestoreProvider);
+  return firestore
+      .collection('listings')
+      .where('isVerified', isEqualTo: false)
       .snapshots();
 });
 

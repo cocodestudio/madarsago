@@ -223,6 +223,7 @@ class _LoginScreenState extends State<LoginScreen>
                           textAlign: TextAlign.center,
                           style: textTheme.headlineMedium?.copyWith(
                             fontFamily: 'Bold',
+                            fontSize: 18, // CHANGED
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -233,7 +234,7 @@ class _LoginScreenState extends State<LoginScreen>
                           textAlign: TextAlign.center,
                           style: textTheme.bodyMedium?.copyWith(
                             fontFamily: 'TagRegular',
-                            fontSize: 16,
+                            fontSize: 15, // CHANGED: 16 se 15
                             height: 1.5,
                           ),
                         ),
@@ -252,6 +253,7 @@ class _LoginScreenState extends State<LoginScreen>
                                 style: textTheme.bodyMedium?.copyWith(
                                   fontFamily: 'Bold',
                                   color: appPrimaryColor,
+                                  fontSize: 14.5, // CHANGED
                                 ),
                               ),
                             ),
@@ -286,6 +288,7 @@ class _LoginScreenState extends State<LoginScreen>
                             style: textTheme.bodySmall?.copyWith(
                               color: Colors.redAccent,
                               fontFamily: 'Regular',
+                              fontSize: 11.5, // CHANGED
                             ),
                           ),
                         ],
@@ -303,7 +306,7 @@ class _LoginScreenState extends State<LoginScreen>
                             ),
                             textStyle: textTheme.bodyMedium?.copyWith(
                               fontFamily: 'Bold',
-                              fontSize: 16,
+                              fontSize: 15, // CHANGED: 16 se 15
                             ),
                             elevation: 0,
                             shadowColor: appPrimaryColor.withAlpha(100),
@@ -343,7 +346,10 @@ class _LoginScreenState extends State<LoginScreen>
       decoration: InputDecoration(
         labelText: 'Phone Number',
         counterText: '',
-        labelStyle: textTheme.bodyMedium?.copyWith(fontFamily: 'Regular'),
+        labelStyle: textTheme.bodyMedium?.copyWith(
+          fontFamily: 'Regular',
+          fontSize: 14.5,
+        ), // CHANGED
         filled: true,
         fillColor: inputFillColor,
         border: OutlineInputBorder(
@@ -360,7 +366,10 @@ class _LoginScreenState extends State<LoginScreen>
         ),
       ),
       initialCountryCode: 'IN',
-      style: textTheme.bodyMedium?.copyWith(fontFamily: 'Regular'),
+      style: textTheme.bodyMedium?.copyWith(
+        fontFamily: 'Regular',
+        fontSize: 14.5,
+      ), // CHANGED
       onChanged: (phone) {
         _phoneNumber = phone.completeNumber;
       },
@@ -368,7 +377,10 @@ class _LoginScreenState extends State<LoginScreen>
         backgroundColor: isDarkMode ? appDarkColor : Colors.white,
         searchFieldInputDecoration: InputDecoration(
           labelText: 'Search country',
-          labelStyle: textTheme.bodyMedium?.copyWith(fontFamily: 'Regular'),
+          labelStyle: textTheme.bodyMedium?.copyWith(
+            fontFamily: 'Regular',
+            fontSize: 14.5,
+          ), // CHANGED
           filled: true,
           fillColor: inputFillColor,
           border: OutlineInputBorder(
@@ -392,7 +404,10 @@ class _LoginScreenState extends State<LoginScreen>
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 60,
-      textStyle: textTheme.headlineSmall?.copyWith(fontFamily: 'Bold'),
+      textStyle: textTheme.headlineSmall?.copyWith(
+        fontFamily: 'Bold',
+        fontSize: 22,
+      ), // CHANGED
       decoration: BoxDecoration(
         color: inputFillColor,
         borderRadius: BorderRadius.circular(16),
@@ -432,6 +447,7 @@ class _LoginScreenState extends State<LoginScreen>
             style: textTheme.bodyMedium?.copyWith(
               fontFamily: 'Bold',
               color: appPrimaryColor,
+              fontSize: 14.5, // CHANGED
             ),
           ),
         ),

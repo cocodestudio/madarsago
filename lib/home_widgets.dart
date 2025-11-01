@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:madarsago/main.dart';
-import 'package:intl/intl.dart';
+import 'package:madarsago/profile_provider.dart';
 import 'package:madarsago/profile_screen.dart';
+import 'package:intl/intl.dart';
 
 class Place {
   final String imageUrl;
@@ -21,19 +23,22 @@ class Place {
 
 final List<Place> nearbyMasjids = [
   Place(
-    imageUrl: 'https://placehold.co/400x300/297373/FFFFFF?text=Masjid+A',
+    imageUrl:
+        'https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=764',
     name: "Jama Masjid",
     location: "2.1km away",
     rating: 4.8,
   ),
   Place(
-    imageUrl: 'https://placehold.co/400x300/CA895F/FFFFFF?text=Masjid+B',
+    imageUrl:
+        'https://plus.unsplash.com/premium_photo-1678373453638-4bf2c8df91bc?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170',
     name: "Masjid e Nabawi",
     location: "3.5km away",
     rating: 4.9,
   ),
   Place(
-    imageUrl: 'https://placehold.co/400x300/A491D3/FFFFFF?text=Masjid+C',
+    imageUrl:
+        'https://images.unsplash.com/photo-1569929919600-59123640bc02?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=627',
     name: "Al-Noor Mosque",
     location: "1.2km away",
     rating: 4.5,
@@ -42,19 +47,22 @@ final List<Place> nearbyMasjids = [
 
 final List<Place> nearbyMadarsas = [
   Place(
-    imageUrl: 'https://placehold.co/400x300/1F1A38/FFFFFF?text=Madarsa+A',
+    imageUrl:
+        'https://images.unsplash.com/photo-1654619138810-4fc794eacf3a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170',
     name: "Jamia Millia",
     location: "4.2km away",
     rating: 4.7,
   ),
   Place(
-    imageUrl: 'https://placehold.co/400x300/D0DDD7/000000?text=Madarsa+B',
+    imageUrl:
+        'https://images.unsplash.com/photo-1626025567322-568e373bf492?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170',
     name: "Darul Uloom",
     location: "5.0km away",
     rating: 4.6,
   ),
   Place(
-    imageUrl: 'https://placehold.co/400x300/A491D3/FFFFFF?text=Madarsa+C',
+    imageUrl:
+        'https://images.unsplash.com/photo-1620400282077-e1da3bc376ad?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1632',
     name: "Madarsa Al-Faizan",
     location: "6.1km away",
     rating: 4.5,
@@ -63,38 +71,48 @@ final List<Place> nearbyMadarsas = [
 
 final List<Place> topMadarsas = [
   Place(
-    imageUrl: 'https://placehold.co/300x300/297373/FFFFFF?text=Madarsa+A',
+    imageUrl:
+        'https://images.unsplash.com/photo-1680339407010-e15a5eb10ab4?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1129',
     name: "Darul Uloom Deoband",
     location: "Deoband, UP",
     rating: 4.9,
   ),
   Place(
-    imageUrl: 'https://placehold.co/300x300/CA895F/FFFFFF?text=Madarsa+B',
+    imageUrl:
+        'https://images.unsplash.com/photo-1661470468460-5733b5e74ba4?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2157',
     name: "Jamia Nizamia",
     location: "Hyderabad, TS",
     rating: 4.7,
   ),
   Place(
-    imageUrl: 'https://placehold.co/300x300/A491D3/FFFFFF?text=Madarsa+C',
+    imageUrl:
+        'https://images.unsplash.com/photo-1665569623441-35f777561ec6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1632',
     name: "Al-Jamiatul Ashrafia",
     location: "Mubarakpur, UP",
     rating: 4.8,
   ),
   Place(
-    imageUrl: 'https://placehold.co/300x300/1F1A38/FFFFFF?text=Madarsa+D',
+    imageUrl:
+        'https://images.unsplash.com/photo-1591626756435-414d56deb180?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=880',
     name: "Raza Academy",
     location: "Bareilly, UP",
     rating: 4.6,
   ),
 ];
 
-class HomeHeader extends StatelessWidget {
+class HomeHeader extends ConsumerWidget {
   const HomeHeader({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final textTheme = Theme.of(context).textTheme;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    final userData = ref.watch(userDataProvider);
+    String? photoUrl;
+    if (userData.hasValue && userData.value?.data() != null) {
+      photoUrl = (userData.value!.data() as Map<String, dynamic>)['photoUrl'];
+    }
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(24.0, 10.0, 24.0, 0),
@@ -111,7 +129,7 @@ class HomeHeader extends StatelessWidget {
                   "Location",
                   style: textTheme.bodySmall?.copyWith(
                     fontFamily: 'TagRegular',
-                    fontSize: 14,
+                    fontSize: 13,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -127,7 +145,7 @@ class HomeHeader extends StatelessWidget {
                       "New Delhi, India",
                       style: textTheme.bodyMedium?.copyWith(
                         fontFamily: 'Bold',
-                        fontSize: 16,
+                        fontSize: 15,
                       ),
                     ),
                     Icon(
@@ -151,11 +169,16 @@ class HomeHeader extends StatelessWidget {
               backgroundColor: isDarkMode
                   ? Colors.white.withAlpha(20)
                   : appLightColor.withAlpha(200),
-              child: const Icon(
-                Icons.person_outline,
-                color: appPrimaryColor,
-                size: 24,
-              ),
+              backgroundImage: (photoUrl != null)
+                  ? NetworkImage(photoUrl)
+                  : null,
+              child: (photoUrl == null)
+                  ? const Icon(
+                      Icons.person_outline,
+                      color: appPrimaryColor,
+                      size: 24,
+                    )
+                  : null,
             ),
           ),
         ],
@@ -171,10 +194,10 @@ class HomeSearchBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context,
-      double shrinkOffset,
-      bool overlapsContent,
-      ) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     final textTheme = Theme.of(context).textTheme;
     final Color scaffoldBg = isDarkMode ? appDarkColor : Colors.grey[50]!;
     final Color inputColor = isDarkMode
@@ -204,6 +227,7 @@ class HomeSearchBarDelegate extends SliverPersistentHeaderDelegate {
             hintStyle: textTheme.bodyMedium?.copyWith(
               fontFamily: 'Regular',
               color: Colors.grey[500],
+              fontSize: 14.5,
             ),
             prefixIcon: Icon(Icons.search, color: Colors.grey[500], size: 24),
             filled: true,
@@ -220,7 +244,7 @@ class HomeSearchBarDelegate extends SliverPersistentHeaderDelegate {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
               borderSide: BorderSide(
-                color: appPrimaryColor.withOpacity(0.5),
+                color: appPrimaryColor.withValues(alpha: 0.5),
                 width: 1.5,
               ),
             ),
@@ -260,7 +284,7 @@ class _LiveClockSectionState extends State<LiveClockSection> {
     _updateTime();
     _timer = Timer.periodic(
       const Duration(seconds: 1),
-          (Timer t) => _updateTime(),
+      (Timer t) => _updateTime(),
     );
   }
 
@@ -308,7 +332,7 @@ class _LiveClockSectionState extends State<LiveClockSection> {
                 Text(
                   _currentTime,
                   style: textTheme.headlineMedium?.copyWith(
-                    fontSize: 22,
+                    fontSize: 20,
                     fontFamily: 'Bold',
                   ),
                 ),
@@ -317,7 +341,7 @@ class _LiveClockSectionState extends State<LiveClockSection> {
                   _currentDay,
                   style: textTheme.bodySmall?.copyWith(
                     fontFamily: 'TagRegular',
-                    fontSize: 14,
+                    fontSize: 13,
                   ),
                 ),
               ],
@@ -333,7 +357,7 @@ class _LiveClockSectionState extends State<LiveClockSection> {
                 Text(
                   "28°C", // Fake weather
                   style: textTheme.headlineMedium?.copyWith(
-                    fontSize: 20,
+                    fontSize: 19,
                     fontFamily: 'Bold',
                   ),
                 ),
@@ -384,7 +408,7 @@ class CategorySection extends StatelessWidget {
                 category["name"],
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontFamily: 'Regular',
-                  fontSize: 13,
+                  fontSize: 12.5,
                 ),
               ),
             ],
@@ -410,10 +434,7 @@ class _NearbyMasjidListState extends State<NearbyMasjidList> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(
-      viewportFraction: 0.8,
-      initialPage: 5000,
-    );
+    _pageController = PageController(viewportFraction: 0.8, initialPage: 5000);
     _currentPage = 5000;
 
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
@@ -469,10 +490,7 @@ class _NearbyMadarsaListState extends State<NearbyMadarsaList> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(
-      viewportFraction: 0.8,
-      initialPage: 5000,
-    );
+    _pageController = PageController(viewportFraction: 0.8, initialPage: 5000);
     _currentPage = 5000;
 
     _timer = Timer.periodic(const Duration(seconds: 4), (Timer timer) {
@@ -513,7 +531,6 @@ class _NearbyMadarsaListState extends State<NearbyMadarsaList> {
   }
 }
 
-
 class NearbyListItem extends StatelessWidget {
   final Place place;
   final String label;
@@ -547,7 +564,7 @@ class NearbyListItem extends StatelessWidget {
                     color: appPrimaryColor,
                     value: loadingProgress.expectedTotalBytes != null
                         ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes!
+                              loadingProgress.expectedTotalBytes!
                         : null,
                   ),
                 );
@@ -556,7 +573,10 @@ class NearbyListItem extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.black.withOpacity(0.8), Colors.transparent],
+                  colors: [
+                    Colors.black.withValues(alpha: 0.8),
+                    Colors.transparent,
+                  ],
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
                   stops: const [0.0, 0.6],
@@ -574,7 +594,7 @@ class NearbyListItem extends StatelessWidget {
                     place.name,
                     style: textTheme.bodyMedium?.copyWith(
                       fontFamily: 'Bold',
-                      fontSize: 18,
+                      fontSize: 17,
                       color: Colors.white,
                     ),
                     maxLines: 1,
@@ -585,7 +605,7 @@ class NearbyListItem extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.location_on_outlined,
-                        color: Colors.white.withOpacity(0.8),
+                        color: Colors.white.withValues(alpha: 0.8),
                         size: 16,
                       ),
                       const SizedBox(width: 4),
@@ -593,8 +613,8 @@ class NearbyListItem extends StatelessWidget {
                         place.location,
                         style: textTheme.bodySmall?.copyWith(
                           fontFamily: 'TagRegular',
-                          fontSize: 14,
-                          color: Colors.white.withOpacity(0.8),
+                          fontSize: 13,
+                          color: Colors.white.withValues(alpha: 0.8),
                         ),
                       ),
                     ],
@@ -615,7 +635,7 @@ class NearbyListItem extends StatelessWidget {
                       vertical: 5,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.3),
+                      color: Colors.black.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
@@ -623,7 +643,7 @@ class NearbyListItem extends StatelessWidget {
                       style: textTheme.bodySmall?.copyWith(
                         fontFamily: 'Bold',
                         color: Colors.white,
-                        fontSize: 12,
+                        fontSize: 11.5,
                       ),
                     ),
                   ),
@@ -738,9 +758,9 @@ class RecommendedListItem extends StatelessWidget {
                                 child: CircularProgressIndicator(
                                   color: appPrimaryColor,
                                   value:
-                                  loadingProgress.expectedTotalBytes != null
+                                      loadingProgress.expectedTotalBytes != null
                                       ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
+                                            loadingProgress.expectedTotalBytes!
                                       : null,
                                 ),
                               ),
@@ -761,7 +781,7 @@ class RecommendedListItem extends StatelessWidget {
                                 vertical: 5,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.3),
+                                color: Colors.black.withValues(alpha: 0.3),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
@@ -769,7 +789,7 @@ class RecommendedListItem extends StatelessWidget {
                                 style: textTheme.bodySmall?.copyWith(
                                   fontFamily: 'Bold',
                                   color: Colors.white,
-                                  fontSize: 12,
+                                  fontSize: 11.5,
                                 ),
                               ),
                             ),
@@ -787,7 +807,7 @@ class RecommendedListItem extends StatelessWidget {
                           place.name,
                           style: textTheme.bodyMedium?.copyWith(
                             fontFamily: 'Bold',
-                            fontSize: 16,
+                            fontSize: 15,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -806,7 +826,7 @@ class RecommendedListItem extends StatelessWidget {
                                 place.location,
                                 style: textTheme.bodySmall?.copyWith(
                                   fontFamily: 'TagRegular',
-                                  fontSize: 14,
+                                  fontSize: 13,
                                 ),
                                 overflow: TextOverflow.ellipsis,
                               ),

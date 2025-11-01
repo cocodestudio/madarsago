@@ -77,6 +77,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       style: textTheme.bodyMedium?.copyWith(
                         color: appPrimaryColor,
                         fontFamily: 'Bold',
+                        fontSize: 14.5, // CHANGED
                       ),
                     ),
                   ),
@@ -136,7 +137,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                       textStyle: textTheme.bodyMedium?.copyWith(
                         fontFamily: 'Bold',
-                        fontSize: 16,
+                        fontSize: 15, // CHANGED: 16 se 15
                       ),
                       elevation: 0,
                     ),
@@ -269,55 +270,64 @@ class _OnboardingPageWidgetState extends State<OnboardingPageWidget>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    // CHANGED: Pura Column responsiveness ke liye update kiya
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          FadeTransition(
-            opacity: _imageFade,
-            child: SlideTransition(
-              position: _imageSlide,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  widget.imageUrl,
-                  height: 300,
-                  width: 300,
-                  fit: BoxFit.cover,
+      child: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min, // Taaki content center mein rahe
+            children: [
+              FadeTransition(
+                opacity: _imageFade,
+                child: SlideTransition(
+                  position: _imageSlide,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(
+                      widget.imageUrl,
+                      height: 300,
+                      width: 300,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          const SizedBox(height: 48),
-          FadeTransition(
-            opacity: _titleFade,
-            child: SlideTransition(
-              position: _titleSlide,
-              child: Text(
-                widget.title,
-                textAlign: TextAlign.center,
-                style: textTheme.headlineMedium?.copyWith(fontFamily: 'Bold'),
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          FadeTransition(
-            opacity: _descFade,
-            child: SlideTransition(
-              position: _descSlide,
-              child: Text(
-                widget.description,
-                textAlign: TextAlign.center,
-                style: textTheme.bodyMedium?.copyWith(
-                  fontFamily: 'TagRegular',
-                  fontSize: 16,
-                  height: 1.5,
+              const SizedBox(height: 48),
+              FadeTransition(
+                opacity: _titleFade,
+                child: SlideTransition(
+                  position: _titleSlide,
+                  child: Text(
+                    widget.title,
+                    textAlign: TextAlign.center,
+                    style: textTheme.headlineMedium?.copyWith(
+                      fontFamily: 'Bold',
+                      fontSize: 20, // CHANGED
+                    ),
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(height: 16),
+              FadeTransition(
+                opacity: _descFade,
+                child: SlideTransition(
+                  position: _descSlide,
+                  child: Text(
+                    widget.description,
+                    textAlign: TextAlign.center,
+                    style: textTheme.bodyMedium?.copyWith(
+                      fontFamily: 'TagRegular',
+                      fontSize: 15, // CHANGED: 16 se 15
+                      height: 1.5,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
